@@ -11,19 +11,8 @@ mysqldump --opt -u <> -p <> measurements meterReadings
 mysql -u [uname] -p[pass] [db_to_restore] < [backupfile.sql]
 
 
-Other useful options:
-
---add-drop-table	will delete a current table before creating a new one
---no-data		will simply copy the table structure
-			This is what I want!
-
-
-
 New user created:
 	pi_manage
 	Ass1ngt0n
 
 	Needs permissions: Lock Table
-
-
-
