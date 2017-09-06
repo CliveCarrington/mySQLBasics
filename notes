@@ -1,0 +1,18 @@
+SQL Commands/techniques
+
+
+
+Back and REstore
+
+mysqldump --opt -u [uname] -p[pass] [dbname] > [backupfile.sql]
+
+mysqldump --opt -u <> -p <> measurements meterReadings
+
+mysql -u [uname] -p[pass] [db_to_restore] < [backupfile.sql]
+
+
+New user created:
+	pi_manage
+	Ass1ngt0n
+
+	Needs permissions: Lock Table
