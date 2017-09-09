@@ -25,5 +25,8 @@ New user created:
 
 	Needs permissions: Lock Table
 
+Developing a single shell script to:
 
-
+	pull_struct	<from_database> <from_table> <name to save to on s3>
+	pull_data	<from_database> <from_table> <name to save to on s3>
+	push_data	<to_database> <to_table> <name to pull from on s3>
