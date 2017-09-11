@@ -4,7 +4,7 @@
 
 if [ $# -lt 2 ]
 then
-        echo "Usage : $0 [pull_struct | pull_data | push_data"
+        echo "Usage : $0 [pull_struct | pull_data | push_data | list"
         exit
 fi
 
@@ -40,8 +40,11 @@ push_data)  echo  "Push Saved  SQL file"
 	echo
 	mysql -u pi_manage -pAss1ngt0n testCopyDatabase < ./listRecords.sql
     ;;
+list)	echo "The following fies are avialable in the s3 bucket"
+	s3cmd ls s3://len.carrington.mySQL
+    ;;
 *) 	echo "The command $1 is not known"
-        echo "Usage : $0 [pull_struct | pull_data | push_data"
+        echo "Usage : $0 [pull_struct | pull_data | push_data | list"
    ;;
 esac
 exit
