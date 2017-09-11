@@ -14,6 +14,10 @@ mysql -u pi_manage -pAss1ngt0n testDatabase < ./listRecords.sql
 
 mysqldump --opt --add-drop-table --no-data -u pi_manage -pAss1ngt0n  testDatabase testTable > ./backup/testBackupScript.sql
 
+s3cmd put ./backup/testBackupScript.sql s3://len.carrington.mySQL/test.sql
+sleep 5 
+s3cmd get s3://len.carrington.mySQL/test.sql ./backup/testBackupScriptFromS3.sql
+ 
 
 # Takes the SQL command file and applies it to the backup database
 mysql -u pi_manage -pAss1ngt0n testCopyDatabase < ./backup/testBackupScript.sql
@@ -38,8 +42,8 @@ mysql -u pi_manage -pAss1ngt0n testCopyDatabase < ./listRecords.sql
 
 # Now to move the contents of the original table across
 
-mysqldump --opt --skip-add-drop-table --no-create-info  -u pi_manage -pAss1ngt0n testDatabase testTable > ./backup/testBackupScript.sql
-mysql -u pi_manage -pAss1ngt0n testCopyDatabase < ./backup/testBackupScript.sql
+mysqldump --opt --skip-add-drop-table --no-create-info  -u pi_manage -pAss1ngt0n testDatabase testTable > ./backup/testBackupScriptData.sql
+mysql -u pi_manage -pAss1ngt0n testCopyDatabase < ./backup/testBackupScriptData.sql
 
 # Now see what the database contains
 echo

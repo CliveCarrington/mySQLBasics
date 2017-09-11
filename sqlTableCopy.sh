@@ -4,29 +4,44 @@
 
 if [ $# -lt 2 ]
 then
-        echo "Usage : $0 Signalnumber PID"
+        echo "Usage : $0 [pull_struct | pull_data | push_data"
         exit
 fi
+
 
 case "$1" in
 
 pull_struct)  echo "Pull Structure only"
-	mysqldump --opt --add-drop-table --no-data -u pi_manage -pAss1ngt0n  $2 $3 > ./backup/$4.sql
+	if [ -f ./.temp/$4.sql ] ; then
+		rm -f ./.temp/$4.sql
+	fi
+	mysqldump --opt --add-drop-table --no-data -u pi_manage -pAss1ngt0n  $2 $3 > ./.temp/$4.sql
+	echo "Now attempt to save it to len.carrington.mySQL"
+	s3cmd put ./.temp/$4.sql s3://len.carrington.mySQL/$4.sql
     ;;
-pull_data)  echo  "Pull Data into existing table"
-	mysqldump --opt --skip-add-drop-table --no-create-info  -u pi_manage -pAss1ngt0n testDatabase testTable > ./backup/testBackupScriptData.sql
+pull_data)  echo  "Pull Data from existing table"
+	if [ -f ./.temp/$4.sql ] ; then
+		rm -f ./.temp/$4.sql
+	fi
+	mysqldump --opt --skip-add-drop-table --no-create-info  -u pi_manage -pAss1ngt0n $2 $3 > ./.temp/$4.sql
+	echo "Now attempt to save it to len.carrington.mySQL"
+	s3cmd put ./.temp/$4.sql s3://len.carrington.mySQL/$4.sql
     ;;  
 push_data)  echo  "Push Saved  SQL file"
 # Takes the SQL command file and applies it to the backup database
-	mysql -u pi_manage -pAss1ngt0n $2 < ./backup/$3.sql
+	if [ -f ./.temp/$3.sql ] ; then
+		rm -f ./.temp/$3.sql
+	fi
+	echo "Attempt to retrieve it from len.carrington.mySQL"
+	s3cmd get s3://len.carrington.mySQL/$3.sql ./.temp/$3.sql
+	mysql -u pi_manage -pAss1ngt0n $2 < ./.temp/$3.sql
 	echo
 	echo "list of the new copy database"
 	echo
 	mysql -u pi_manage -pAss1ngt0n testCopyDatabase < ./listRecords.sql
     ;;
-9) echo  "Sending SIGKILL signal"
-   ;;
-*) echo "Signal number $1 is not processed"
+*) 	echo "The command $1 is not known"
+        echo "Usage : $0 [pull_struct | pull_data | push_data"
    ;;
 esac
 exit
