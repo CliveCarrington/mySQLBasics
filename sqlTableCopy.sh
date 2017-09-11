@@ -2,7 +2,7 @@
 
 # /bin/rm -f ./backup/testBackupScript.sql
 
-if [ $# -lt 2 ]
+if [ $# -lt 1 ]
 then
         echo "Usage : $0 [pull_struct | pull_data | push_data | list"
         exit
