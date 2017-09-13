@@ -30,3 +30,27 @@ Developing a single shell script to:
 	pull_struct	<from_database> <from_table> <name to save to on s3>
 	pull_data	<from_database> <from_table> <name to save to on s3>
 	push_data	<to_database> <name to pull from on s3>			Table will be named as per the source dB
+
+Prior to use, need to install s3cmd
+
+Use:
+	sudo yum install s3cmd (AWS)
+
+
+Then need to create a key and shared secret to set up s3cmd to your s3 instance
+
+On AWS, in the IAM section, add a new user:
+	Name the user after the instance name, i.e. ChapelRoad2017
+	Choose the programmatic access
+	Add the user to the s3Group already set up
+	Copy the Access Key ID and shared secret
+	
+Use the command: s3cmd --configure to supply these details
+
+Create an encryption pasword and accept remaining defaults
+
+Create user account for pi_manage on your databases
+
+
+Current problem is
+
