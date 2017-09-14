@@ -7,7 +7,7 @@ pw="Ass1ngt0n"
 
 if [ $# -lt 1 ]
 then
-        echo "Usage : $0 [pull_struct | pull_data | pull_table | push_data | list"
+        echo "Usage : $0 [pull_struct | pull_data | pull_table | push_data | list (Files)i | listDBs | listTables"
         exit
 fi
 
@@ -54,8 +54,14 @@ push_data)  echo  "Push Saved  SQL file"
 list)	echo "The following files are available in the s3 bucket"
 	s3cmd ls s3://len.carrington.mySQL
     ;;
+listDBs)	echo "The following databases are available on this server"
+	mysql -u $username -p$pw < ./listDatabases.sql
+    ;;
+listTables)	echo "The following tables are available on this server"
+	mysql -u $username -p$pw $2 < ./listTables.sql
+    ;;
 *) 	echo "The command $1 is not known"
-        echo "Usage : $0 [pull_struct | pull_data | push_data | list"
+        echo "Usage : $0 [pull_struct | pull_data | pull_table | push_data | list (Files)i | listDBs | listTables"
    ;;
 esac
 exit
