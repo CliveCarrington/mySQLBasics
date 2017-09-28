@@ -11,10 +11,46 @@ then
         exit
 fi
 
+if [ $1 = "-h" ]
+then
+case "$2" in
+	
+pull_struct)
+	echo "Usage $0 pull_struct [database] [table] [output_filename]"
+	echo "To create a new table (deleting the old one) with no data"
+	;;
+pull_data)
+	echo "Usage $0 pull_struct [database] [table] [output_filename]"
+	echo "To transfer data to an existing table"
+	;;
+pull_table)
+	echo "Usage $0 pull_table [database] [table] [output_filename]"
+	echo "To transfer table structure and data to a table of the same name in a new database"
+	;;
+push_data)
+	echo "Usage $0 push_data [database] [input_filename]"
+	echo "To push the saved table/data into an existing database." 
+	;;
+list)
+	echo "Usage $0 list "
+	echo "Lists the files that are currently available in the s3 bucket"
+	;;
+listDBs)
+	echo "Usage $0 listDBs" 
+	echo "To list the databases available on the current server"
+	;;
+listTables)
+	echo "Usage $0 listTables [database]"
+	echo "To list the tables available in the database on the current server"
+	;;
+esac
+	exit
+fi
 
 case "$1" in
 
 pull_struct)  echo "Pull Structure only"
+
 	if [ -f ./.temp/$4.sql ] ; then
 		rm -f ./.temp/$4.sql
 	fi
