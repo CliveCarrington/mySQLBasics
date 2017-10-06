@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# /bin/rm -f ./backup/testBackupScript.sql
-
 username="pi_manage"
 pw="Ass1ngt0n"
 
