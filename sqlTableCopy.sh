@@ -7,7 +7,7 @@ pw="Ass1ngt0n"
 
 if [ $# -lt 1 ]
 then
-        echo "Usage : $0 [pull_struct | pull_data | pull_table | push_data | list (Files)i | listDBs | listTables"
+        echo "Usage : $0 [pull_struct | pull_data | pull_table | push_data | list (Files) | listDBs | listTables | count"
         exit
 fi
 
@@ -42,6 +42,10 @@ listDBs)
 listTables)
 	echo "Usage $0 listTables [database]"
 	echo "To list the tables available in the database on the current server"
+	;;
+count)
+	echo "Usage $0 count [database] [Table]"
+	echo "To count the records in a table on the current server"
 	;;
 esac
 	exit
@@ -95,6 +99,10 @@ listDBs)	echo "The following databases are available on this server"
     ;;
 listTables)	echo "The following tables are available on this server"
 	mysql -u $username -p$pw $2 < ./listTables.sql
+    ;;
+count)	echo "The count of records in this table is"
+	echo "select count(*) from $3;" > .temp/count.sql
+	mysql -u $username -p$pw $2 < ./.temp/count.sql
     ;;
 *) 	echo "The command $1 is not known"
         echo "Usage : $0 [pull_struct | pull_data | pull_table | push_data | list (Files)i | listDBs | listTables"
